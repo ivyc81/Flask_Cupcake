@@ -15,9 +15,28 @@ connect_db(app)
 def show_index():
     """ Shows all cupcakes and a new cupcake form """
 
-    cupcakes = Cupcake.query.all()
+    return render_template('index.html')
 
-    return render_template('index.html', cupcakes=cupcakes)
+@app.route('/cupcakes/search')
+def search_for_cupcake():
+    """ takes in search type and term and returns a list of cupcake """
+
+    search_type = request.args["type"]
+    search_term = request.args["term"]
+
+    cupcakes = Cupcake.query.filter(getattr(Cupcake, search_type).like(search_term))
+    # cupcakes = db.session.query(Cupcake).filter(getattr(Cupcake,search_type) == search_term).all()
+    # cupcakes = db.session.query(Cupcake).filter(Cupcake.flavor == 'chocolate')
+
+    serialized_cupcakes = [{"id": cupcake.id,
+                            "flavor": cupcake.flavor,
+                            "size": cupcake.size,
+                            "rating": cupcake.rating,
+                            "image": cupcake.image}
+                           for cupcake in cupcakes]
+
+    return jsonify(response=serialized_cupcakes)
+
 
 @app.route('/cupcakes')
 def return_all_cupcakes():

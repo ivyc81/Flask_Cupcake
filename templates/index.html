@@ -1,27 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<form id="search_form">
+    <label for="type">Type:</label>
+    <select name="type" id="type">
+        <option value="flavor">Flavor</option>
+        <option value="size">Size</option>
+        <option value="rating">Rating</option>
+    </select>
+    <label for="search_term">Search:</label>
+    <input type="text" name="search_term" id="search_term">
+    <button type="submit"> search</button>
+</form>
+
 <div id="pic_list">
-    {% for cupcake in cupcakes %}
-    <div>
-        <img src="{{ cupcake.image }}">
-        <p>Flavor: {{ cupcake.flavor }}</p>
-        <p>Size: {{ cupcake.size }}</p>
-        <p>Rating: {{ cupcake.rating }}</p>
-        <a href="/cupcakes/{{ cupcake.id }}">^Edit</a>
-    </div>
-    {% endfor %}
+
 </div>
 
-    <form id="new_cupcake_form">
-        <label for="flavor">Flavor: </label>
-        <input id="flavor" name="flavor" required>
-        <label for="size">Size: </label>
-        <input id="size" name="size" required>
-        <label for="rating">Rating: </label>
-        <input id="rating" name="rating" type="number" required>
-        <label for="image">Image URL: </label>
-        <input id="image" name="image" type="url">
-        <button type="submit">Add Cupcake</button>
-    </form>
+<form id="new_cupcake_form">
+    <label for="flavor">Flavor: </label>
+    <input id="flavor" name="flavor" required>
+    <label for="size">Size: </label>
+    <input id="size" name="size" required>
+    <label for="rating">Rating: </label>
+    <input id="rating" name="rating" type="number" required>
+    <label for="image">Image URL: </label>
+    <input id="image" name="image" type="url">
+    <button type="submit">Add Cupcake</button>
+</form>
 {% endblock %}
